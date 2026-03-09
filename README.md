@@ -76,3 +76,20 @@ sudo systemctl enable cnc_emulator.service
 sudo systemctl enable cnc_watchdog.service
 
 sudo systemctl start cnc_watchdog.service
+
+## Hardening
+```
+systemctl list-unit-files --type=service --state=enabled
+systemctl disable bluetooth
+sudo apt purge gcc make gdb
+sudo systemctl disable --now bluetooth
+sudo systemctl disable --now cloud-config cloud-final cloud-init-local cloud-init-main cloud-init-network
+systemctl list-unit-files --type=service
+sudo systemctl disable getty@tty1
+sudo systemctl disable --now keyboard-setup console-setup
+sudo systemctl disable --now udisks2
+sudo systemctl disable ModemManager.service
+sudo systemctl disable regenerate_ssh_host_keys.service
+```
+
+ssh only key auth

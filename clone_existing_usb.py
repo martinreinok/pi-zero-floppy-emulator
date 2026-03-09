@@ -4,7 +4,7 @@ import sys
 if len(sys.argv) < 2:
     sys.exit("Usage: sudo python3 clone_existing_usb.py /dev/sdX")
 
-drive, image_file = sys.argv[1], "/home/pi/original_cnc_image.bin"
+drive, image_file = sys.argv[1], "/home/pizerocnc/original_cnc_image.bin"
 offsets = []
 
 print(f"[*] Cloning {drive} to {image_file} (256MB)...")
