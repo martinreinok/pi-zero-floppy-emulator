@@ -8,6 +8,7 @@ https://magazine.raspberrypi.com/articles/pi-zero-w-smart-usb-flash-drive
 
 ## Samba config
 
+nano /etc/samba/smb.conf
 ```
 [CNC_Floppy]
    path = /mnt/cnc_disks
@@ -29,6 +30,20 @@ nmcli device wifi connect "ssid" password "pw"
 nmcli connection up "ssid"
 
 nmcli connection delete "ssid"
+
+add wifi which is not present yet:
+```
+sudo nmcli connection add type wifi ifname wlan0 con-name "SSID" ssid "SSID"
+sudo nmcli connection modify "SSID" wifi-sec.key-mgmt sae
+sudo nmcli connection modify "SSID" wifi-sec.psk "PASSWORD_HERE"
+sudo nmcli connection modify "SSID" connection.autoconnect yes
+```
+
+### Turn off power saving mode!
+```
+sudo mkdir -p /etc/NetworkManager/conf.d
+printf "[connection]\nwifi.powersave = 2\n" | sudo tee /etc/NetworkManager/conf.d/wifi-powersave.conf
+```
 
 ## systemctl config
 
@@ -60,7 +75,7 @@ After=cnc_emulator.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 /home/pizerocnc/cnc-usb-emulator/watchdog.py
+ExecStart=/usr/bin/python3 /home/pizerocnc/cnc-usb-emulator/usb_monitor.py
 WorkingDirectory=/home/pizerocnc/cnc-usb-emulator
 StandardOutput=journal
 StandardError=journal

@@ -5,7 +5,7 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 WATCH_PATH = "/mnt/cnc_disks"
-CMD_RELOAD = "sync && sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches' && sudo modprobe -r g_mass_storage && sleep 1 && sudo modprobe g_mass_storage file=/home/pizerocnc/original_cnc_image.bin stall=0 ro=1 removable=1"
+CMD_RELOAD = "sync && sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches' && sudo modprobe -r g_mass_storage && sleep 1 && sudo modprobe g_mass_storage file=/home/pizerocnc2/original_cnc_image.bin stall=0 ro=1 removable=1"
 
 class RefreshUSB(FileSystemEventHandler):
     def __init__(self):
@@ -19,7 +19,7 @@ class RefreshUSB(FileSystemEventHandler):
     def process_event(self, event):
         if event.is_directory:
             return
-            
+
         # Ignore macOS hidden system files
         if ".DS_Store" in event.src_path or "/._" in event.src_path:
             return
@@ -27,7 +27,7 @@ class RefreshUSB(FileSystemEventHandler):
         # Only react to actual file changes, not just "reads"
         if event.event_type in ['modified', 'created', 'deleted', 'moved']:
             print(f"[{time.strftime('%H:%M:%S')}] Detected {event.event_type} on: {event.src_path}")
-            
+
             # Cancel the old timer and start a new one (Debounce)
             if self.timer is not None:
                 self.timer.cancel()
@@ -50,3 +50,4 @@ try:
 except KeyboardInterrupt:
     observer.stop()
 observer.join()
+
