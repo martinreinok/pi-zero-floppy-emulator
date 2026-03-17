@@ -20,6 +20,12 @@ nano /etc/samba/smb.conf
    directory mask = 0770
 ```
 
+Add samba user
+```
+sudo smbpasswd -a pizerocnc2
+sudo smbpasswd -e pizerocnc2
+```
+
 sudo systemctl restart smbd
 
 ## Wifi config

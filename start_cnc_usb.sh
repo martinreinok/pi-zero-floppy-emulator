@@ -1,4 +1,4 @@
-as#!/bin/bash
+#!/bin/bash
 
 BIN_FILE="/home/pizerocnc2/original_cnc_image.bin"  # Original cloned image
 MOUNT_BASE="/mnt/cnc_disks"
