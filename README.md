@@ -45,10 +45,17 @@ sudo nmcli connection modify "SSID" wifi-sec.psk "PASSWORD_HERE"
 sudo nmcli connection modify "SSID" connection.autoconnect yes
 ```
 
+
 ### Turn off power saving mode!
 ```
 sudo mkdir -p /etc/NetworkManager/conf.d
 printf "[connection]\nwifi.powersave = 2\n" | sudo tee /etc/NetworkManager/conf.d/wifi-powersave.conf
+```
+
+### Manual IP
+```
+sudo nmcli connection modify "SSID" ipv4.addresses 192.168.1.6/24 ipv4.gateway 192.168.1.1 ipv4.dns "1.1.1.1 8.8.8.8" ipv4.method manual
+sudo reboot
 ```
 
 ## systemctl config
